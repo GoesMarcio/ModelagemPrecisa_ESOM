@@ -1,0 +1,15 @@
+
+context Conjunto::addElemento : Integer elem
+pre-condition: !contains(elem)
+post-condition: result = contains(elem)
+
+context Conjunto::removeElemento : Integer elem
+pre-condition: contains(elem)
+post-condition: result = !contains(elem)
+
+context Conjunto
+invariant tamanho: size >= 0
+
+context Conjunto::calculaMedia
+pre-condition: size()>0
+post-condition: result = somaConjunto() / size()      //ou result = conj -> sum() / conj -> size()

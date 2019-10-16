@@ -1,0 +1,31 @@
+model Conjuntos
+
+class Conjunto
+attributes
+  conj : Collection(Integer);
+operations
+  calculaMedia() : Real
+  addElemento(elem : Integer) : Boolean
+  removeElemento(elem : Integer) : Boolean
+end
+
+constraints
+
+-- Para adicionar um elemento no Conjunto, o elemento não pode estar contido no conjunto e deve ser um inteiro
+context Conjunto::addElemento(elem: Integer) : Boolean
+pre: conj->count(elem) = 0
+post: result = conj->includes(elem)
+
+-- Para remover um elemento no Conjunto, o elemento tem que estar contido no conjunto e deve ser um inteiro
+context Conjunto::removeElemento(elem: Integer) : Boolean
+pre: conj->includes(elem)
+post: result = conj->count(elem) = 0
+
+-- O tamanho do conjunto deve ser maior ou igual a 0
+context Conjunto
+inv tamanho: conj->size >= 0
+
+-- Retorna a soma de todos os elementos dividido pelo número de elementos, caso o número de elementos seja maior que 0
+context Conjunto::calculaMedia() : Real
+pre: conj->size > 0
+post: result = conj->sum() / conj->size
